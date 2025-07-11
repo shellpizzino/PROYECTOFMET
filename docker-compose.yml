@@ -1,0 +1,55 @@
+#configuracion
+
+services:
+  db_usuarios:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_DB: usuarios_db
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: contrasena
+    volumes:
+      - usuarios_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  db_medicamentos:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_DB: medicamentos_db
+      POSTGRES_USER: medicamento_user
+      POSTGRES_PASSWORD: medicamento_pass
+    volumes:
+      - medicamentos_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+
+  api:
+    build: ./api
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./api:/app
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db_medicamentos
+    environment:
+      - DATABASE_URL=postgres://medicamento_user:medicamento_pass@db_medicamentos:5432/medicamentos_db
+
+  web:
+    build: ./web
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./web:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db_usuarios
+      - api
+    environment:
+      - DATABASE_URL=postgres://usuario:contrasena@db_usuarios:5432/usuarios_db
+
+volumes:
+  usuarios_data:
+  medicamentos_data:
