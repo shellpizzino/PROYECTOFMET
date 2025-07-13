@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario de Medicamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@heroicons/vue@2.0.0-beta.1/dist/heroicons.umd.js" defer></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md text-center">
+        <!-- Ícono + Título -->
+        <div class="flex items-center justify-center gap-2 mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 17v-6h6v6m3 4H6a2 2 0 01-2-2V7a2 2 0 012-2h3l2-2h2l2 2h3a2 2 0 012 2v12a2 2 0 01-2 2z" />
+            </svg>
+            <h1 class="text-2xl font-semibold text-gray-800">Inventario de Medicamentos</h1>
+        </div>
+
+        <p class="mb-4 text-gray-600">Bienvenido, <span class="text-blue-600 font-medium">{{ user.username }}</span></p>
+
+        <div class="space-y-4">
+            <button onclick="location.href='{% url 'buscar_medicamentos' %}'"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-xl transition duration-300">
+                Buscar Medicamentos
+            </button>
+
+            {% if user.is_superuser %}
+                <button onclick="location.href='{% url 'agregar_medicamento' %}'"
+                    class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-xl transition duration-300">
+                    Agregar Medicamento
+                </button>
+                <button onclick="location.href='{% url 'eliminar_medicamento' %}'"
+                    class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-xl transition duration-300">
+                    Eliminar Medicamento
+                </button>
+            {% else %}
+                <button disabled
+                    class="w-full bg-gray-300 text-gray-600 font-semibold py-2 px-4 rounded-xl cursor-not-allowed">
+                    Agregar Medicamento
+                </button>
+                <button disabled
+                    class="w-full bg-gray-300 text-gray-600 font-semibold py-2 px-4 rounded-xl cursor-not-allowed">
+                    Eliminar Medicamento
+                </button>
+            {% endif %}
+        </div>
+
+        <div class="mt-6">
+            <a href="{% url 'logout' %}"
+               class="text-sm text-red-500 hover:underline transition duration-300">
+               Cerrar sesión
+            </a>
+        </div>
+    </div>
+</body>
+</html>
