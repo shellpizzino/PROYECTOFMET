@@ -10,7 +10,11 @@ PostgreSQL
 Docker & Docker Compose
 
 Estructura del proyecto
-inventario_farmacia/ ├── api/ # API REST para medicamentos ├── web/ # Aplicación web (login, home, botones) ├── docker-compose.yml # Orquestación de contenedores └── README.md # Documentación del proyecto
+inventario_farmacia/ 
+├── api/ # API REST para medicamentos 
+├── web/ # Aplicación web (login, home, botones) 
+├── docker-compose.yml # Orquestación de contenedores 
+└── README.md # Documentación del proyecto
 
 Descripción general del funcionamiento
 Login en / con usuarios registrados.
